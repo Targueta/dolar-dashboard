@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Valor do Dólar</title>
+</head>
+<body>
+    <h1>Valor do Dólar:</h1>
+    <div id="dolar-valor">Carregando...</div>
+
+    <script>
+        async function mostrarCotação() {
+            try {
+                const res = await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL');
+                const data = await res.json();
+                const dolar = data.USDBRL;
+                document.getElementById('dolar-valor').innerText = `Compra: ${dolar.bid}, Venda: ${dolar.ask}`;
+            } catch (err) {
+                document.getElementById('dolar-valor').innerText = 'Erro ao carregar.';
+                console.error('Erro ao buscar cotações:', err.message);
+            }
+        }
+
+        mostrarCotação();
+        setInterval(mostrarCotação, 30000); // Atualiza a cada 30 segundos
+    </script>
+</body>
+</html>
